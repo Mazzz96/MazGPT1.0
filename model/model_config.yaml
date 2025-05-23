@@ -1,0 +1,22 @@
+models:
+  - name: llama3
+    type: huggingface
+    path: meta-llama/Meta-Llama-3-8B-Instruct
+    skills: [chat, general, reasoning]
+  - name: mixtral
+    type: huggingface
+    path: mistralai/Mixtral-8x7B-Instruct-v0.1
+    skills: [code, math, reasoning]
+  - name: qwen
+    type: huggingface
+    path: Qwen/Qwen1.5-7B-Chat
+    skills: [multilingual, image, vision]
+ensembling:
+  enabled: true
+  strategies:
+    - skill: code
+      models: [mixtral, llama3]
+      method: best
+    - skill: general
+      models: [llama3]
+      method: first

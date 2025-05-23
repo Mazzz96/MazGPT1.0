@@ -1,0 +1,5 @@
+Meta Llama 4 Community License Agreement
+
+[Insert full official Llama 4 Community License text here.]
+
+For the full license, see: https://ai.meta.com/resources/models-and-libraries/llama-downloads/

@@ -1,0 +1,23 @@
+# requirements.txt for MazGPT backend
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
+aiosmtplib
+chromadb
+sentry-sdk
+redis
+pyotp>=2.8.0
+cryptography>=42.0.0
+# For full-text search with SQLite (optional):
+# sqlite-fts5
+# For FAISS (alternative to ChromaDB):
+# faiss-cpu
+pytest
+pytest-cov
+httpx
+requests
+coverage

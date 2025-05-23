@@ -1,0 +1,8 @@
+# MazGPT Project Structure
+
+- model/: Model code (training, inference)
+- plugins/: Modular skills/plugins
+- data/: Datasets for training/fine-tuning and model learning storage
+- cli_netrypoint.py: CLI entry point
+
+This file marks the project root.

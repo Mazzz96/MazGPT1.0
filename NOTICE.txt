@@ -1,0 +1,5 @@
+Meta Llama 3 and Meta Llama 4 are licensed under their respective Meta Community Licenses, Copyright © Meta Platforms, Inc. All Rights Reserved.
+
+For more information, see:
+- https://ai.meta.com/resources/models-and-libraries/llama-downloads/
+- https://ai.meta.com/resources/models-and-libraries/llama-acceptable-use-policy/

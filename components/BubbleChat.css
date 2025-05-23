@@ -1,0 +1,124 @@
+.bubblechat-container {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.bubblechat-modal {
+  /* 50% transparent dark overlay when expanded */
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ai-face {
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  border-radius: 50%;
+  background: transparent;
+  margin-bottom: 8px;
+  transition: all 0.4s cubic-bezier(.72,1.53,.63,1.08);
+}
+.ai-face.expanded {
+  margin-bottom: 32px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32);
+}
+.bubblechat-bubbles {
+  width: 230px;
+  min-height: 40px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+  background: transparent;
+  border-radius: 30px 30px 30px 30px / 35px 35px 30px 30px;
+  transition: all 0.4s;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.bubblechat-bubbles.expanded {
+  width: 400px;
+  min-height: 120px;
+  max-height: 70vh;
+  background: rgba(20,25,40,0.32);
+  border-radius: 36px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+  padding: 12px 0 10px 0;
+}
+.bubblechat-scroll {
+  width: 100%;
+  max-height: 230px;
+  overflow-y: auto;
+  padding-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bubblechat-bubble {
+  max-width: 73%;
+  margin: 0 9px;
+  padding: 9px 18px;
+  font-size: 1rem;
+  border-radius: 50px 50px 50px 50px / 44px 44px 44px 44px;
+  background: radial-gradient(ellipse at 60% 30%, rgba(255,255,255,0.44) 0%, rgba(80,180,255,0.28) 65%, rgba(160,220,255,0.15) 100%);
+  box-shadow: 0 2px 18px rgba(60,120,200,0.11), 0 0px 0px rgba(0,0,0,0.01);
+  color: #222;
+  font-weight: 400;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  transition: all 0.33s cubic-bezier(.6,2.3,.4,1);
+  opacity: 0.6;
+  border: 2.5px solid rgba(160,230,255,0.32);
+  /* Bubble "shine" effect */
+  position: relative;
+  overflow: visible;
+}
+.bubblechat-bubble.vivid {
+  opacity: 0.97;
+  box-shadow: 0 4px 28px rgba(90,180,255,0.23), 0 1.5px 2.5px rgba(0,0,0,0.04);
+  border: 2.5px solid rgba(180,230,255,0.52);
+}
+.bubblechat-bubble.left {
+  align-self: flex-start;
+  border-bottom-left-radius: 18px 44px;
+}
+.bubblechat-bubble.right {
+  align-self: flex-end;
+  border-bottom-right-radius: 18px 44px;
+  background: radial-gradient(ellipse at 65% 20%, rgba(255,255,255,0.5) 0%, rgba(160,200,255,0.32) 60%, rgba(130,160,255,0.16) 100%);
+  border: 2.5px solid rgba(220,200,255,0.29);
+}
+.bubblechat-bubble::before {
+  /* Bubble "shine" overlay for glossy look */
+  content: "";
+  display: block;
+  position: absolute;
+  top: 6px; left: 16px;
+  width: 45%; height: 38%;
+  background: radial-gradient(ellipse at 30% 18%, rgba(255,255,255,0.33) 0%, rgba(255,255,255,0.04) 100%);
+  border-radius: 40%;
+  pointer-events: none;
+}
+.bubblechat-inputbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 0 auto;
+  padding: 0 0 6px 0;
+  border-radius: 18px;
+}
+@media (max-width: 600px) {
+  .bubblechat-bubbles, .bubblechat-bubbles.expanded { width: 95vw; min-width: 0; }
+}

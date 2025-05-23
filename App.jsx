@@ -6,9 +6,28 @@ import Auth from "./components/Auth";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// Simple error boundary for debugging
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    // You can log errorInfo here
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div style={{ color: 'red', padding: 20 }}>Frontend Error: {this.state.error && this.state.error.toString()}</div>;
+    }
+    return this.props.children;
+  }
+}
+
 function ProtectedApp() {
   const { user, loading, logout, userData, updateUserData } = useAuth();
-  // --- Load or initialize user projects/messages/preferences from userData ---
   const defaultProjects = [{ id: "default", name: "Default" }];
   const [projects, setProjects] = useState(userData?.projects || defaultProjects);
   const [projectId, setProjectId] = useState(projects[0]?.id || "default");
@@ -61,6 +80,7 @@ function ProtectedApp() {
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <Auth />;
+  // Always show the floating robot face/chat UI
   return (
     <>
       <button style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }} onClick={logout}>Logout</button>
@@ -80,14 +100,16 @@ function ProtectedApp() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Auth />} />
-          <Route path="/" element={<ProtectedRoute><ProtectedApp /></ProtectedRoute>} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Auth />} />
+            <Route path="/" element={<ProtectedRoute><ProtectedApp /></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }

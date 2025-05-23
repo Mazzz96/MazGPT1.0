@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, act } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider, useAuth } from '../components/AuthContext';
 
 describe('AuthContext', () => {
@@ -10,9 +11,11 @@ describe('AuthContext', () => {
       return null;
     }
     render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
+      <MemoryRouter>
+        <AuthProvider>
+          <TestComponent />
+        </AuthProvider>
+      </MemoryRouter>
     );
     expect(context).toHaveProperty('user');
     expect(context).toHaveProperty('login');

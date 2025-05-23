@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import BubbleChat from '../components/BubbleChat.jsx';
 import Auth from '../components/Auth.jsx';
 
@@ -18,3 +19,5 @@ describe('Integration', () => {
     // expect(screen.getByText('Hello')).toBeInTheDocument();
   });
 });
+
+// In actual tests, wrap components in <MemoryRouter> if they use useNavigate/useLocation

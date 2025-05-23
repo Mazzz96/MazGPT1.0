@@ -95,9 +95,7 @@ export default function Auth() {
             />
           </label>
         )}
-        {(localError || error) && (
-          <div className="auth-error" role="alert">{localError || error}</div>
-        )}
+        <div className="auth-error" role="alert">{localError || error}</div>
         {success && <div className="auth-success" role="status">{success}</div>}
         <button type="submit" disabled={loading} aria-busy={loading} aria-label={step === "signup" ? "Sign Up" : step === "reset" ? "Send Reset Link" : "Sign In"}>
           {loading ? (

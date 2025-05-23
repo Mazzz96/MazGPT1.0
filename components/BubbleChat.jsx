@@ -7,7 +7,10 @@ const defaultProjects = [
   { id: "default", name: "Default" }
 ];
 
-export default function BubbleChat({ projectId, setProjectId, projects, setProjects, messages, setMessages, preferences, setPreferences }) {
+export default function BubbleChat({
+  projectId, setProjectId, projects, setProjects, messages, setMessages, preferences, setPreferences,
+  loading: loadingProp, aiTyping: aiTypingProp, error: errorProp // <-- test props
+}) {
   const { user, refresh, logout } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [input, setInput] = useState("");
@@ -182,6 +185,11 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
   const chatOpacity = expanded ? 0.95 : 0.5;
   const bgOverlay = expanded ? "bubblechat-modal" : "";
 
+  // --- Handle robot face click to expand/minimize chat ---
+  function handleFaceClick() {
+    setExpanded((v) => !v);
+  }
+
   // --- 2FA: Fetch status on mount or user change ---
   useEffect(() => {
     if (!user) return;
@@ -336,6 +344,11 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
     </div>
   );
 
+  // Use test props if provided
+  const effectiveLoading = typeof loadingProp === 'boolean' ? loadingProp : loading;
+  const effectiveAiTyping = typeof aiTypingProp === 'boolean' ? aiTypingProp : aiTyping;
+  const effectiveError = typeof errorProp === 'string' ? errorProp : error;
+
   return (
     <div className={`bubblechat-container ${bgOverlay} ${preferences.theme === "dark" ? "bubblechat-dark" : ""}`}> 
       {/* Project selector UI */}
@@ -372,8 +385,8 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
         ))}
       </div>
       {/* Error and loading indicators */}
-      {error && <div className="bubblechat-error">{error}</div>}
-      {loading && <div className="bubblechat-loading">Loading...</div>}
+      {effectiveError && <div className="bubblechat-error" role="alert" aria-live="assertive">{effectiveError}</div>}
+      {effectiveLoading && <div className="bubblechat-loading">Loading...</div>}
       {/* Import panel */}
       {importing && expanded && (
         <div style={{ background: "#fffbe6", color: "#222", borderRadius: 10, padding: 10, marginBottom: 8 }}>
@@ -428,9 +441,8 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
               {msg.text}
             </div>
           ))}
-          {aiTyping && <div className="bubblechat-bubble left typing" role="status" aria-live="polite">MazGPT is typing…</div>}
+          {effectiveAiTyping && <div className="bubblechat-bubble left typing" role="status" aria-live="polite">MazGPT is typing</div>}
         </div>
-        {error && <div className="bubblechat-error" role="alert" aria-live="assertive">{error}</div>}
         {/* Message input bar */}
         <form className="bubblechat-inputbar" onSubmit={handleSend} style={{
           opacity: 0.8,
@@ -450,10 +462,10 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
               width: "85%",
               fontSize: 16,
             }}
-            disabled={loading || aiTyping}
+            disabled={effectiveLoading || effectiveAiTyping}
             aria-label="Message input"
-            aria-disabled={loading || aiTyping}
-            title={loading || aiTyping ? "Please wait for MazGPT to finish responding" : "Type your message"}
+            aria-disabled={effectiveLoading || effectiveAiTyping}
+            title={effectiveLoading || effectiveAiTyping ? "Please wait for MazGPT to finish responding" : "Type your message"}
           />
           <button type="submit" style={{
             marginLeft: 10,
@@ -463,9 +475,9 @@ export default function BubbleChat({ projectId, setProjectId, projects, setProje
             background: "#00bfff",
             color: "#fff",
             fontWeight: 600,
-            cursor: loading || aiTyping ? "not-allowed" : "pointer"
-          }} disabled={loading || aiTyping} aria-disabled={loading || aiTyping} aria-label="Send message" title="Send message">
-            {aiTyping || loading ? <span className="spinner" aria-label="Loading" style={{ marginRight: 8 }} /> : null}
+            cursor: effectiveLoading || effectiveAiTyping ? "not-allowed" : "pointer"
+          }} disabled={effectiveLoading || effectiveAiTyping} aria-disabled={effectiveLoading || effectiveAiTyping} aria-label="Send message" title="Send message">
+            {effectiveAiTyping || effectiveLoading ? <span className="spinner" aria-label="Loading" style={{ marginRight: 8 }} /> : null}
             Send
           </button>
         </form>

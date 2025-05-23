@@ -45,7 +45,8 @@ app = FastAPI()
 app.add_middleware(JWTAuthMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
-if not os.environ.get("TESTING"):
+# Enable HTTPS redirect only if MAZGPT_HTTPS=1 is set in the environment
+if os.environ.get("MAZGPT_HTTPS") == "1":
     app.add_middleware(HTTPSRedirectMiddleware)
 app.add_exception_handler(RateLimitExceeded, lambda r, e: JSONResponse(status_code=429, content={"detail": "Rate limit exceeded"}))
 app.state.limiter = limiter

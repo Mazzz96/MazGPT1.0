@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { AuthProvider } from '../components/AuthContext.jsx';
 import BubbleChat from '../components/BubbleChat.jsx';
 
@@ -22,9 +23,11 @@ const defaultProps = {
 
 function renderWithProvider(ui, props = {}) {
   return render(
-    <AuthProvider>
-      {React.cloneElement(ui, props)}
-    </AuthProvider>
+    <MemoryRouter>
+      <AuthProvider>
+        {React.cloneElement(ui, props)}
+      </AuthProvider>
+    </MemoryRouter>
   );
 }
 

@@ -1,4 +1,8 @@
 models:
+  - name: llama4scout
+    type: huggingface
+    path: C:/Users/Asus/.llama/checkpoints/Llama-4-Scout-17B-16E-Instruct
+    skills: [chat, general, reasoning]
   - name: llama3
     type: huggingface
     path: meta-llama/Meta-Llama-3-8B-Instruct
@@ -18,5 +22,5 @@ ensembling:
       models: [mixtral, llama3]
       method: best
     - skill: general
-      models: [llama3]
+      models: [llama4scout]
       method: first

@@ -21,3 +21,10 @@ pytest-cov
 httpx
 requests
 coverage
+gradio
+beautifulsoup4
+sentence-transformers
+slowapi
+slowapi[redis]
+torch
+bs4
